@@ -1,16 +1,16 @@
-#Define a biblioteca como um dicionário global
+# Define a biblioteca como um dicionário global
 biblioteca = {}
 
 def validar_titulo(titulo):
     # Valida se o título do livro é uma string não vazia.
-    if not isinstance(titulo, str) or not titulo.strip():
+    if not titulo or not titulo.strip():
         print("Título inválido. Digite um título válido.")
         return False
     return True
 
 def validar_campo(campo):
     # Valida se o campo de atualização é válido.
-    campos_validos = ("autor", "ano de publicaçao", "disponivel ou emprestado")
+    campos_validos = ("autor", "ano_publicacao", "disponivel")
     if campo not in campos_validos:
         print(f"Campo inválido: {campo}. Digite um campo válido entre {campos_validos}.")
         return False
@@ -59,7 +59,7 @@ def adicionar_livro():
     novo_livro = {
         "autor": autor,
         "ano_publicacao": ano_publicacao,
-        "disponivel ou emprestado": True
+        "disponivel": True
     }
 
     biblioteca[titulo] = novo_livro
@@ -72,16 +72,16 @@ def atualizar_livro():
         if validar_titulo(titulo) and titulo in biblioteca:
             break
         else:
-            print("Livro não encontrado. Digite um  existente.")
+            print("Livro não encontrado. Digite um título existente.")
 
     while True:
-        campo = input("Digite o campo a ser atualizado (autor, ano de publicação, disponivel ou emprestado): ")
+        campo = input("Digite o campo a ser atualizado (autor, ano de publicaçao, disponivel ): ")
         if validar_campo(campo):
             break
 
     novo_valor = input(f"Digite o novo valor para {campo}: ")
 
-    # Converte 'disponivel' para boolean se for o campo atualizado
+    # Converte 'disponivel' para booleano se for o campo atualizado
     if campo == "disponivel":
         novo_valor = novo_valor.lower() in ["sim", "true", "1"]
 
@@ -98,7 +98,7 @@ def remover_livro():
             print("Livro não encontrado. Digite um título existente.")
 
     del biblioteca[titulo]
-    print(f"O livro '{titulo}' foi removido!")
+    print(f"O livro '{titulo}' foi removido com sucesso!")
 
 def consultar_disponibilidade():
     # Função para consultar a disponibilidade de um livro.
@@ -107,13 +107,13 @@ def consultar_disponibilidade():
         if validar_titulo(titulo) and titulo in biblioteca:
             break
         else:
-            print("Livro não encontrado. Digite um título existente.")
+            print("Infelizmente o livro não foi  encontrado. Digite um título existente.")
 
     livro = biblioteca[titulo]
     disponivel = livro["disponivel"]
 
     if disponivel:
-        print(f"O livro '{titulo}' está disponível!.")
+        print(f"O livro '{titulo}' está disponível para empréstimo.")
     else:
         print(f"O livro '{titulo}' está emprestado.")
 
